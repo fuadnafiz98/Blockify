@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import heroImage from "../static/images/hero.jpg";
 
 const Home = () => {
@@ -15,9 +16,11 @@ const Home = () => {
           <p className="text-lg text-center text-blue-200">
             Secure supply chain management with blockchain
           </p>
-          <button className="px-8 py-4 font-semibold text-blue-600 bg-white rounded-lg hover:bg-blue-50">
-            Get Started
-          </button>
+          <Link to="/login">
+            <button className="px-8 py-4 font-semibold text-blue-600 bg-white rounded-lg hover:bg-blue-50">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
       <div className="mt-12 space-y-6">

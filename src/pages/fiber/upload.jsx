@@ -41,14 +41,14 @@ const FiberUpload = ({ contract, provider }) => {
     setLoading(true);
     e.preventDefault();
     try {
-      // const file1 = img1Ref.current.files[0];
-      // const file2 = img2Ref.current.files[0];
-      // const result1 = await ipfs.add(file1);
-      // const result2 = await ipfs.add(file2);
-      // console.log(result1);
-      // console.log(result2);
-      const result1 = { path: "" };
-      const result2 = { path: "" };
+      const file1 = img1Ref.current.files[0];
+      const file2 = img2Ref.current.files[0];
+      const result1 = await ipfs.add(file1);
+      const result2 = await ipfs.add(file2);
+      console.log(result1);
+      console.log(result2);
+      // const result1 = { path: "" };
+      // const result2 = { path: "" };
       const signer = contract.connect(provider.getSigner());
       const transaction = await signer.addFiberInfo(
         data.userId,
@@ -64,8 +64,12 @@ const FiberUpload = ({ contract, provider }) => {
       );
       await transaction.wait();
       setHash(transaction.hash);
+      console.log("[HASH]", transaction.hash);
       setOk(true);
-      const transaction2 = await signer.addFiberHash(data.productId, hash);
+      const transaction2 = await signer.addFiberHash(
+        data.productId,
+        transaction.hash
+      );
       await transaction2.wait();
       setLoading(false);
     } catch (error) {
@@ -195,7 +199,23 @@ const FiberUpload = ({ contract, provider }) => {
           <input ref={img1Ref} type="file" name="img1" id="img1" />
 
           <label htmlFor="img2" className="block text-lg text-gray-700">
-            Img 2
+            <div className="flex space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                />
+              </svg>
+              <p>Fiber Bill of Materials(BoM)</p>
+            </div>
           </label>
           <input ref={img2Ref} type="file" name="img2" id="img2" />
 

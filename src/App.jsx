@@ -14,11 +14,15 @@ import BuyerOrders from "./pages/buyer/orders";
 import BuyerOrder from "./pages/buyer/order";
 import ApparelOrders from "./pages/apparel/orders";
 import ApparelUpload from "./pages/apparel/upload";
+import Login from "./pages/auth/login";
+import ApparelIndex from "./pages/apparel";
 
-// const ADDRESS = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+// test
+// const ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 // const ADDRESS = "0x4F2188e5DDa3df6BBe380A62b7B2e174fB9d777c";
 // new
-const ADDRESS = "0x619faef98C72688061B724573276E681Be2e7Ea0";
+const ADDRESS = "0x2c96A274c9B08626CcE52485f6291C02E05997f0";
+// const ADDRESS = "0x619faef98C72688061B724573276E681Be2e7Ea0";
 
 function App() {
   const [contract, setContract] = useState(undefined);
@@ -49,6 +53,9 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route exact path="/apparel">
+            <ApparelIndex />
+          </Route>
           <Route exact path="/apparel/orders">
             <ApparelOrders contract={contract} provider={provider} />
           </Route>
@@ -77,7 +84,7 @@ function App() {
             <FiberIndex />
           </Route>
           <Route exact path="/login">
-            <div>Login</div>
+            <Login />
           </Route>
         </Router>
       </Suspense>

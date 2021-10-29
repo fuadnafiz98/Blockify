@@ -13,6 +13,9 @@ const BuyerData = ({ contract }) => {
   const [fiberToggle, setFiberToggle] = useState(false);
   const [apparelToggle, setApparelToggle] = useState(false);
 
+  const [fiberHash, setFiberHash] = useState(undefined);
+  const [apparelHash, setApparelHash] = useState(undefined);
+
   useEffect(() => {
     const fetchProductInfo = async () => {
       const data = await contract.getProductInfo(product_id);
@@ -24,14 +27,26 @@ const BuyerData = ({ contract }) => {
       } else if (status === "IN APPAREL") {
         const data = await contract.getFiberInfo(product_id);
         console.log(data);
+        const fiberHash = await contract.getFiberHash(product_id);
+        console.log(fiberHash);
+        setFiberHash(fiberHash);
         setFiberInfo(data);
       } else if (status === "COMPLETE PRODUCTION") {
         const data = await contract.getFiberInfo(product_id);
         console.log(data);
         setFiberInfo(data);
+
+        const fiberHash = await contract.getFiberHash(product_id);
+        console.log(fiberHash);
+        setFiberHash(fiberHash);
+
         const data2 = await contract.getApparelInfo(product_id);
         console.log(data2);
         setApparelInfo(data2);
+
+        const apparelHash = await contract.getApparelHash(product_id);
+        console.log(apparelHash);
+        setApparelHash(apparelHash);
       }
     };
     const fetchData = async () => {
@@ -128,6 +143,18 @@ const BuyerData = ({ contract }) => {
                 {fiberToggle && (
                   <div className="mt-5 rounded-xl">
                     <h3 className="my-2 text-xl font-bold text-blue-600">
+                      Product Hash:
+                    </h3>
+                    <p
+                      style={{
+                        wordBreak: "break-all",
+                        wordWrap: "break-word",
+                      }}
+                      className="p-3 text-center bg-green-100 rounded-lg"
+                    >
+                      {fiberHash && fiberHash}
+                    </p>
+                    <h3 className="my-2 text-xl font-bold text-blue-600">
                       Informations:
                     </h3>
                     <dl>
@@ -159,6 +186,10 @@ const BuyerData = ({ contract }) => {
                     <Attachment
                       title="Fiber Color Pallete"
                       hash={fiberInfo.fiber_color_palette_img}
+                    />
+                    <Attachment
+                      title="Fiber Bill of Materials"
+                      hash={fiberInfo.fiber_bom}
                     />
                   </div>
                 )}
@@ -227,6 +258,18 @@ const BuyerData = ({ contract }) => {
                 {apparelToggle && (
                   <div className="mt-5 rounded-xl">
                     <h3 className="my-2 text-xl font-bold text-blue-600">
+                      Product Hash:
+                    </h3>
+                    <p
+                      style={{
+                        wordBreak: "break-all",
+                        wordWrap: "break-word",
+                      }}
+                      className="p-3 text-center bg-green-100 rounded-lg"
+                    >
+                      {apparelHash && apparelHash}
+                    </p>
+                    <h3 className="my-2 text-xl font-bold text-blue-600">
                       Informations:
                     </h3>
                     <dl>
@@ -258,6 +301,10 @@ const BuyerData = ({ contract }) => {
                       title="Apparel Color Pallete"
                       hash={apparelInfo.apparel_color_palette_img}
                     />
+                    <Attachment
+                      title="Apparel Bill of Matarial"
+                      hash={apparelInfo.apparel_bom}
+                    />
                   </div>
                 )}
               </div>
@@ -278,7 +325,7 @@ const Attachment = ({ title, hash }) => {
       <h3 className="text-base font-medium text-gray-500">{title}</h3>
       <a
         className="flex items-center space-x-2 text-blue-600 hover:underline hover:text-blue-700"
-        href={`https://ipfs.io/ipfs/${hash}`}
+        href={`ipfs://${hash}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

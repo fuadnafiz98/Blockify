@@ -22,7 +22,7 @@ contract Apparel {
         string fiber_type;
         string BSTI_standards_accoradance;
         string fiber_color_palette_img;
-        string img2;
+        string fiber_bom;
     }
 
     struct FiberHash {
@@ -38,7 +38,7 @@ contract Apparel {
         string tensile_strength;
         string thread_count;
         string apparel_color_palette_img;
-        string img2;
+        string apparel_bom;
     }
 
     struct ApparelHash {
@@ -99,7 +99,7 @@ contract Apparel {
         string memory fiber_type,
         string memory BSTI_standards_accoradance,
         string memory fiber_color_palette_img,
-        string memory img2
+        string memory fiber_bom
     ) public {
         fiberOrders[user_id].push(product_id);
         fiberInfos[product_id] = FiberInfo(
@@ -111,7 +111,7 @@ contract Apparel {
             fiber_type,
             BSTI_standards_accoradance,
             fiber_color_palette_img,
-            img2
+            fiber_bom
         );
         updateProductStatus(product_id, "IN APPAREL");
     }
@@ -145,7 +145,7 @@ contract Apparel {
         string memory tensile_strength,
         string memory thread_count,
         string memory apparel_color_palette_img,
-        string memory img2
+        string memory apparel_bom
     ) public {
         apparelOrders[user_id].push(user_id);
         apparelInfos[product_id] = ApparelInfo(
@@ -156,7 +156,7 @@ contract Apparel {
             tensile_strength,
             thread_count,
             apparel_color_palette_img,
-            img2
+            apparel_bom
         );
         updateProductStatus(product_id, "COMPLETE PRODUCTION");
     }
